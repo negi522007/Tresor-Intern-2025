@@ -11,7 +11,8 @@ SRC	=	src/clean_str.c	\
 		src/check_char.c	\
 		src/print_infos.c	\
 		src/gen_file.c	\
-		src/my_getnbr.c
+		src/my_getnbr.c	\
+		src/file_managing.c
 				
 
 NAME	=	receipt

@@ -52,8 +52,6 @@ int gen_file(infos_t receipt_infos)
     HPDF_Page_TextOut(page, 102, 500, receipt_infos.payment_method);
     HPDF_Page_EndText(page);
     sprintf(amount, "quittance_%s.pdf", receipt_infos.receipt_reference);
-    //printf("%s\n", amount);
-    //sprintf(amount, "quitance.pdf");
     HPDF_SaveToFile(pdf, amount);
     HPDF_Free(pdf);
     return 0;
