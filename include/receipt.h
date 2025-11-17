@@ -31,4 +31,5 @@ int check_char(char c, char *str);
 int print_infos(infos_t receipt_infos);
 int check_infos(infos_t *receipt_infos);
 int gen_file(infos_t receipt_infos);
+int my_getnbr(char *str);
 #endif
