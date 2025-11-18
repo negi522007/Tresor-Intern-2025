@@ -13,6 +13,8 @@
     #include <string.h>
     #include <stdlib.h>
     #include <hpdf.h>
+    #include <curl/curl.h>
+    #include <time.h>
 
 typedef struct infos {
     char *customer_name;
@@ -33,4 +35,5 @@ int check_infos(infos_t *receipt_infos);
 int gen_file(infos_t receipt_infos);
 int my_getnbr(char *str);
 int find_file(void);
+int send_receipt(char *filename, char *email_address);
 #endif

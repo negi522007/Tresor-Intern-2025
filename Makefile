@@ -12,7 +12,8 @@ SRC	=	src/clean_str.c	\
 		src/print_infos.c	\
 		src/gen_file.c	\
 		src/my_getnbr.c	\
-		src/file_managing.c
+		src/file_managing.c	\
+		src/send_receipt.c
 				
 
 NAME	=	receipt
@@ -20,7 +21,7 @@ NAME	=	receipt
 all:	$(NAME)
 
 $(NAME):	$(SRC)
-	@gcc -o $(NAME) $(SRC) -g3 -lhpdf
+	@gcc -o $(NAME) $(SRC) -g3 -lhpdf -lcurl
 
 unit_tests: fclean $(NAME)
 

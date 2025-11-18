@@ -15,6 +15,10 @@ int gen_file(infos_t receipt_infos)
     char amount[100];
     int reference = 0;
     FILE *file = NULL;
+    time_t now;
+    time(&now);
+    struct tm  *local = localtime(&now);
+    char hour[100];
 
     pdf = HPDF_New(NULL, NULL);
     page = HPDF_AddPage(pdf);
@@ -35,7 +39,8 @@ int gen_file(infos_t receipt_infos)
     HPDF_Page_TextOut(page, 350, 675, "Date de la quittance: ");
     HPDF_Page_TextOut(page, 450, 675, receipt_infos.receipt_date);
     HPDF_Page_TextOut(page, 350, 655, "Heure de la quittance: ");
-    HPDF_Page_TextOut(page, 458, 655, "yo");
+    sprintf(hour, "%02d:%02d:%02d", local->tm_hour, local->tm_min, local->tm_sec);
+    HPDF_Page_TextOut(page, 458, 655, hour);
     HPDF_Page_TextOut(page, 350, 635, "Reference de la quittance: ");
     HPDF_Page_TextOut(page, 475, 635, receipt_infos.receipt_reference);
     reference = my_getnbr(receipt_infos.receipt_reference) + 1;
@@ -51,8 +56,10 @@ int gen_file(infos_t receipt_infos)
     HPDF_Page_TextOut(page, 10, 500, "Mode de payement: ");
     HPDF_Page_TextOut(page, 102, 500, receipt_infos.payment_method);
     HPDF_Page_EndText(page);
-    sprintf(amount, "quittance_%s.pdf", receipt_infos.receipt_reference);
+    sprintf(amount, "%02d-%02d-%d-quittance_%s.pdf", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, receipt_infos.receipt_reference);
     HPDF_SaveToFile(pdf, amount);
     HPDF_Free(pdf);
+    if (strcmp(receipt_infos.email_address, "\n"))
+        send_receipt(amount, receipt_infos.email_address);
     return 0;
-}
+} 
