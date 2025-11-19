@@ -9,6 +9,20 @@
 from flask import Flask, request, render_template
 from fpdf import FPDF
 from datetime import datetime
+from flask_mail import Mail
+import send_mail
+
+app = Flask(__name__)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+#app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = "gastonagbdl@gmail.com"
+app.config['MAIL_DEFAULT_SENDER'] = "gastonagbdl@gmail.com"
+with open("../secret_password", "r") as f:
+    app.config['MAIL_PASSWORD'] = f.read()
+mail = Mail(app)
+
 def new_ref(str):
     i = 3
     nbr = 0
@@ -24,6 +38,7 @@ def new_ref(str):
 def generate_receipt(infos):
     pdf = FPDF(orientation='P', unit='mm', format=(240, 150))
     pdf.add_page()
+    pdf.image('../negi-peaces.jpeg', x=218, y=132, w=20)
     pdf.image('../src/header.png', x=-6, y=8, w=250)
     pdf.set_font("Arial", style="B", size=18)
     pdf.cell(200, 75, txt="Quittance numérique", ln=True, align="C")
@@ -52,9 +67,8 @@ def generate_receipt(infos):
     pdf.text(193, 90, txt=infos["receipt_date"])
     pdf.text(187, 100, txt=infos["receipt_place"])
     pdf.output(f"{infos["receipt_date"]}-quittance-{infos["receipt_reference"]}.pdf")
-
-#generate_receipt()
-app = Flask(__name__)
+    if infos["email_address"] is not "":
+        send_mail.send_receipt(recipient=infos["email_address"], filepath=f"{infos["receipt_date"]}-quittance-{infos["receipt_reference"]}.pdf", mail=mail)
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
@@ -63,7 +77,7 @@ def main():
         infos = { "customer_name": request.form.get("customer_name"),
                   "customer_phone": request.form.get("customer_phone"),
                   "email_address": request.form.get("email_address"),
-                  "receipt_amount": f" {amount}",
+                  "receipt_amount": f" {amount} FCFA",
                   "receipt_place": request.form.get("receipt_place"),
                   "payment_method": request.form.get("payment_method"),
                   "receipt_date": request.form.get("receipt_date"),
