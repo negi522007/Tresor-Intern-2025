@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Connexion administrateur e-quittance</title>
+        <link href="../static/login.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Authentifiez vous afin de voir les informations liées aux quittances enrégistrées !!</h1>
+        <form action="/login" method="post">
+            <h2>
+                <p>
+                    <label for="name">Entrez votre nom administrateur: </label>
+                    <input type="text" id="name" name="name" required>
+                </p>
+                <p>
+                    <label for="password">Entrez votre mot de passe</label>
+                    <input type="password" id="password" name="password" required>
+                </p>
+            </h2>
+            <h3>
+                <button type="submit">Se connecter</button>
+            </h3>
+        </form>
+    </body>
+</html>
