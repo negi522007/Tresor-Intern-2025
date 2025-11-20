@@ -35,3 +35,41 @@ def insert_infos(infos):
                     ))
     connexion.commit()
     connexion.close()
+
+def research(infos):
+    connexion = sqlite3.connect("receipt.db")
+    cursor = connexion.cursor()
+    params = []
+    query_stc = "SELECT * FROM infos WHERE 1=1"
+    if infos["receipt_reference"]:
+        query_stc += " AND receipt_reference = ?"
+        params.append(infos["receipt_reference"])
+    if infos["customer_name"]:
+        query_stc += " AND customer_name = ?"
+        params.append(infos["customer_name"])
+    if infos["customer_phone"]:
+        query_stc += " AND customer_phone = ?"
+        params.append(infos["customer_phone"])
+    if infos["email_address"]:
+        query_stc += " AND email_address = ?"
+        params.append(infos["email_address"])
+    if infos["receipt_amount"]:
+        query_stc += " AND receipt_amount = ?"
+        params.append(infos["receipt_amount"])
+    if infos["receipt_place"]:
+        query_stc += " AND receipt_place = ?"
+        params.append(infos["receipt_place"])
+    if infos["payment_method"]:
+        query_stc += " AND payment_method = ?"
+        params.append(infos["payment_method"])
+    if infos["receipt_time"]:
+        query_stc += " AND receipt_time = ?"
+        params.append(infos["receipt_time"])
+    if infos["receipt_date"]:
+        query_stc += " AND receipt_date = ?"
+        params.append(infos["receipt_date"])
+    cursor.execute(query_stc, params)
+    results = cursor.fetchall()
+    connexion.close()
+    print("\n\n\n", results, "\n\n")
+    return results

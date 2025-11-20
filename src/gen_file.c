@@ -53,7 +53,7 @@ int gen_file(infos_t receipt_infos)
     HPDF_Page_TextOut(page, 120, 540, amount);
     HPDF_Page_TextOut(page, 10, 520, "Poste comptable: ");
     HPDF_Page_TextOut(page, 90, 520, receipt_infos.receipt_place);
-    HPDF_Page_TextOut(page, 10, 500, "Mode de payement: ");
+    HPDF_Page_TextOut(page, 10, 500, "Mode de paiement: ");
     HPDF_Page_TextOut(page, 102, 500, receipt_infos.payment_method);
     HPDF_Page_EndText(page);
     sprintf(amount, "%02d-%02d-%d-quittance_%s.pdf", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, receipt_infos.receipt_reference);

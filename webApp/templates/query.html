@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Faites votre requête !</title>
-        <link href="../static/style.css" rel="stylesheet" />
+        <link href="../static/query.css" rel="stylesheet" />
     </head>
     <body>
         <h1>Que recherchez-vous ?</h1>
@@ -22,7 +22,7 @@
             </p>
             <p>
                 <label for="receipt_amount">Montant de la quittance: </label>
-                <input type="number" id="receipt_amount" name="receipt_amount" placeholder="5000">
+                <input type="text" id="receipt_amount" name="receipt_amount">
             </p>
             <p>
                 <label for="receipt_place">Poste comptable: </label>
@@ -31,10 +31,19 @@
             <p>
                 <label for="payment_method">Mode de versement: </label>
                 <select name="payment_method" id="payment_method">
+                    <option value="">INCONNU</option>
                     <option value="ESPECE">ESPECE</option>
                     <option value="CHEQUE">CHEQUE</option>
                     <option value="MOMO">MOMO</option>
                 </select>
+            </p>
+            <p>
+                <label for="receipt_reference">Reference de la quittance: </label>
+                <input type="text" id="receipt_reference" name="receipt_reference" placeholder="AA-999999-TGE" pattern="AA-[0-9]{6}-TGE">
+            </p>
+            <p>
+                <label for="receipt_time">Heure de la quittance: </label>
+                <input type="text" id="receipt_time" name="receipt_time" placeholder="00:00:00">
             </p>
                 <label for="receipt_date">Date de la quittance: (mm/ jj/ aaaa)</label>
                 <input type="date" id="receipt_date" name="receipt_date">
@@ -42,5 +51,30 @@
                 <button type="submit">Envoyer</button>
             </h3>
         </form>
+        {% if results %}
+            <h2>Résultats de la requête: </h2>
+            <table border="1">
+                <tr>
+                    <th>Reference de la quittance</th>
+                    <th>Identité du client</th>
+                    <th>Numéro de téléphone du client</th>
+                    <th>Adresse mail du client</th>
+                    <th>Montant de la quittance</th>
+                    <th>Poste comptable</th>
+                    <th>Mode de versement</th>
+                    <th>Heure de la quittance</th>
+                    <th>Date de la quittance: (mm/ jj/ aaaa)</th>
+                </tr>
+                {% for row in results %}
+                <tr>
+                    {% for col in row %}
+                    <td>{{col}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        {% elif results is not none %}
+            <p>Aucun résultat ne correspond à votre recherche</p>
+        {% endif %}
     </body>
 </html>
