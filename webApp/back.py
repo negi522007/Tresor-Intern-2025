@@ -11,6 +11,7 @@ from fpdf import FPDF
 from datetime import datetime
 from flask_mail import Mail
 import send_mail
+import database
 
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -85,6 +86,7 @@ def main():
                   "receipt_time": ""
                }
         generate_receipt(infos)
+        database.insert_infos(infos=infos)
     return render_template("index.html")
 
 if __name__ == "__main__":
