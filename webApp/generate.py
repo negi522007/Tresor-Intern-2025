@@ -54,5 +54,5 @@ def generate_receipt(infos, mail):
     pdf.text(193, 90, txt=infos["receipt_date"])
     pdf.text(187, 100, txt=infos["receipt_place"])
     pdf.output(f"{infos["receipt_date"]}-quittance-{infos["receipt_reference"]}.pdf")
-    if infos["email_address"] is not "":
+    if infos["email_address"]:
         send_mail.send_receipt(recipient=infos["email_address"], filepath=f"{infos["receipt_date"]}-quittance-{infos["receipt_reference"]}.pdf", mail=mail)
