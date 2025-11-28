@@ -106,7 +106,7 @@ Default credentials:
 -   Environment variables for secret data
 
 # 📁 Repository Structure
-
+```
 Tresor-Intern-2025/
 │
 ├── Makefile
@@ -132,7 +132,7 @@ Tresor-Intern-2025/
 │   └── static/                   # CSS files
 │
 └── README.md
-
+```
 # 🔐 Environment Variables
 
     MAIL_USERNAME
