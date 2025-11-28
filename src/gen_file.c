@@ -19,6 +19,7 @@ int gen_file(infos_t receipt_infos)
     time(&now);
     struct tm  *local = localtime(&now);
     char hour[100];
+    char command[200];
 
     pdf = HPDF_New(NULL, NULL);
     page = HPDF_AddPage(pdf);
@@ -47,6 +48,7 @@ int gen_file(infos_t receipt_infos)
     sprintf(receipt_infos.receipt_reference, "AA%06d-TGE", reference);
     file = fopen("receipt_reference", "w");
     fwrite(receipt_infos.receipt_reference, 12, 1, file);
+    printf("%d", reference);
     fclose(file);
     HPDF_Page_TextOut(page, 10, 540, "Montant de la quittance: ");
     sprintf(amount, "%d FCFA", receipt_infos.receipt_amount);
@@ -58,6 +60,8 @@ int gen_file(infos_t receipt_infos)
     HPDF_Page_EndText(page);
     sprintf(amount, "%02d-%02d-%d-quittance_%s.pdf", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, receipt_infos.receipt_reference);
     HPDF_SaveToFile(pdf, amount);
+    sprintf(command, "mkdir %d-%02d-%02d 2> .ignore ; mv %s %d-%02d-%02d/", local->tm_year + 1900, local->tm_mon + 1, local->tm_mday, amount, local->tm_year + 1900, local->tm_mon + 1, local->tm_mday);
+    system(command);
     HPDF_Free(pdf);
     if (strcmp(receipt_infos.email_address, "\n"))
         send_receipt(amount, receipt_infos.email_address);

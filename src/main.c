@@ -27,7 +27,7 @@ int main(void)
     printf("\033[91m----------------------------------------------------------------------------------------------------------------\033[0m\n");
     printf("\n\033[93mBienvenu dans l'application de collecte des recettes au guichet principale de la Trésorerie Générale de l'Etat.\n\nVeuillez remplir les informations ci-dessous pour générer la quittance numérique.\033[0m\n\n");
     printf("\033[91m----------------------------------------------------------------------------------------------------------------\033[0m\n\n");
-    printf("\033[93mEntrez la touche \'f\' pour rechercher un fichier, appuyez la touche entrée pour générer votre quittance.\033[0m\n\n");
+    printf("\033[93mEntrez la touche \'f\' pour rechercher une quittance, appuyez la touche 'entrée' pour générer votre quittance.\033[0m\n\n");
     if (getchar() == 'f')
         find_file();
     receipt_infos = get_infos(receipt_infos);

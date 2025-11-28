@@ -23,9 +23,9 @@ int find_file(void)
     to_find = strtok(NULL, " \n");
     //printf("%s %s %s", cache, str, to_find);
     if (!strcmp(str, "show"))
-        sprintf(command, "ls | grep %s", "AA");
+        sprintf(command, "ls -R | grep %s", "AA");
     else if (to_find && !strcmp(str, "find"))
-        sprintf(command, "ls | grep %s", to_find);
+        sprintf(command, "ls -R | grep %s", to_find);
     else {
         free(cache);
         printf("\033[91mVotre requête est invalide.\033[0m\n\n");

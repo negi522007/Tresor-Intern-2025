@@ -26,7 +26,7 @@ infos_t get_infos(infos_t receipt_infos)
     printf("\n\n\033[94m>\033[0m Entrez l'addresse mail du client (Veuillez sauter cette étape si le client n'en dispose pas): "); getline(&receipt_infos.email_address, &size, stdin); size = 0;
     printf("\n\n\033[94m>\033[0m Entrez le montant de la quittance: "); getline(&cache, &size, stdin);
     if (check_number(cache)) {
-        printf("Veuillez entrer un montant valide.\n");
+        printf("\e[1;31mVeuillez entrer un montant valide.\e[0m\n");
         exit(84);
     }
     receipt_infos.receipt_amount = atoi(cache);
@@ -35,7 +35,7 @@ infos_t get_infos(infos_t receipt_infos)
     printf("\n\n\033[94m>\033[0m Entrez la date de la quittance: "); getline(&receipt_infos.receipt_date, &size, stdin);
     file = fopen("receipt_reference", "r");
     if (!file) {
-        printf("Il y a un prolème avec le fichier receipt_reference, veuillez le régler.\n"); 
+        printf("\e[1;31mIl y a un prolème avec le fichier receipt_reference, veuillez le régler.\e[0m\n"); 
         exit(84);
     }
     getline(&receipt_infos.receipt_reference, &size, file);
@@ -72,19 +72,20 @@ int check_date(char *str)
 int check_infos(infos_t *receipt_infos)
 {
     if (check_number((*receipt_infos).customer_phone) || strlen((*receipt_infos).customer_phone) != 11) {
-        printf("Veuillez entrez un numéro de téléphone à 10 chiffres.\n");
+        printf("\e[1;31mVeuillez entrez un numéro de téléphone à 10 chiffres.\e[0m\n");
         return 84;
     }
     if (!strcmp((*receipt_infos).receipt_place, "\n")) {
         free((*receipt_infos).receipt_place);
         (*receipt_infos).receipt_place = strdup("TGE");
     }
+    (*receipt_infos).receipt_place = strtok((*receipt_infos).receipt_place, "\n");
     if (strcmp((*receipt_infos).payment_method, "ESPECE\n") && strcmp((*receipt_infos).payment_method, "CHEQUE\n") && strcmp((*receipt_infos).payment_method, "MOMO\n")) {
-        printf("Entrez un mode de payment valide (ESPECE, CHEQUE ou MOMO)\n");
+        printf("\e[1;31mEntrez un mode de payment valide (ESPECE, CHEQUE ou MOMO)\e[0m\n");
         return 84;
     }
     if (check_date((*receipt_infos).receipt_date)) {
-        printf("Entrez une date valide suivant le format JJ/MM/AAAA.\n");
+        printf("\e[1;31mEntrez une date valide suivant le format JJ/MM/AAAA.\e[0m\n");
         return 84;
     }
     return 0;
